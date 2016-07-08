@@ -23,8 +23,8 @@ FLINK_VERSION=${FLINK_VERSION:-"0.10.1"}
 #SPARK_VERSION=${SPARK_VERSION:-"1.5.1"}
 SPARK_VERSION=${SPARK_VERSION:-"1.6.1"}
 
-#STORM_DIR="apache-storm-$STORM_VERSION"
-STORM_DIR="/usr/hdp/current/storm-client"
+STORM_DIR="/opt/apache-storm-$STORM_VERSION"
+#STORM_DIR="/usr/hdp/current/storm-client"
 REDIS_DIR="redis-$REDIS_VERSION"
 KAFKA_DIR="kafka_$SCALA_BIN_VERSION-$KAFKA_VERSION"
 FLINK_DIR="flink-$FLINK_VERSION"
