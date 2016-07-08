@@ -11,15 +11,20 @@ MVN=${MVN:-mvn}
 GIT=${GIT:-git}
 MAKE=${MAKE:-make}
 
-KAFKA_VERSION=${KAFKA_VERSION:-"0.8.2.1"}
-REDIS_VERSION=${REDIS_VERSION:-"3.0.5"}
+#KAFKA_VERSION=${KAFKA_VERSION:-"0.8.2.1"}
+KAFKA_VERSION=${KAFKA_VERSION:-"0.9.0.1"}
+#REDIS_VERSION=${REDIS_VERSION:-"3.0.5"}
+REDIS_VERSION=${REDIS_VERSION:-"3.2.1"}
 SCALA_BIN_VERSION=${SCALA_BIN_VERSION:-"2.10"}
 SCALA_SUB_VERSION=${SCALA_SUB_VERSION:-"4"}
-STORM_VERSION=${STORM_VERSION:-"0.10.0"}
+#STORM_VERSION=${STORM_VERSION:-"0.10.0"}
+STORM_VERSION=${STORM_VERSION:-"1.0.1"}
 FLINK_VERSION=${FLINK_VERSION:-"0.10.1"}
-SPARK_VERSION=${SPARK_VERSION:-"1.5.1"}
+#SPARK_VERSION=${SPARK_VERSION:-"1.5.1"}
+SPARK_VERSION=${SPARK_VERSION:-"1.6.1"}
 
-STORM_DIR="apache-storm-$STORM_VERSION"
+#STORM_DIR="apache-storm-$STORM_VERSION"
+STORM_DIR="/usr/hdp/current/storm-client"
 REDIS_DIR="redis-$REDIS_VERSION"
 KAFKA_DIR="kafka_$SCALA_BIN_VERSION-$KAFKA_VERSION"
 FLINK_DIR="flink-$FLINK_VERSION"
@@ -146,20 +151,20 @@ run() {
     cd ..
 
     #Fetch Kafka
-    KAFKA_FILE="$KAFKA_DIR.tgz"
-    fetch_untar_file "$KAFKA_FILE" "$APACHE_MIRROR/kafka/$KAFKA_VERSION/$KAFKA_FILE"
+#    KAFKA_FILE="$KAFKA_DIR.tgz"
+#    fetch_untar_file "$KAFKA_FILE" "$APACHE_MIRROR/kafka/$KAFKA_VERSION/$KAFKA_FILE"
 
     #Fetch Storm
-    STORM_FILE="$STORM_DIR.tar.gz"
-    fetch_untar_file "$STORM_FILE" "$APACHE_MIRROR/storm/$STORM_DIR/$STORM_FILE"
+#    STORM_FILE="$STORM_DIR.tar.gz"
+#    fetch_untar_file "$STORM_FILE" "$APACHE_MIRROR/storm/$STORM_DIR/$STORM_FILE"
 
     #Fetch Flink
-    FLINK_FILE="$FLINK_DIR-bin-hadoop27-scala_${SCALA_BIN_VERSION}.tgz"
-    fetch_untar_file "$FLINK_FILE" "$APACHE_MIRROR/flink/flink-$FLINK_VERSION/$FLINK_FILE"
+#    FLINK_FILE="$FLINK_DIR-bin-hadoop27-scala_${SCALA_BIN_VERSION}.tgz"
+#    fetch_untar_file "$FLINK_FILE" "$APACHE_MIRROR/flink/flink-$FLINK_VERSION/$FLINK_FILE"
 
     #Fetch Spark
-    SPARK_FILE="$SPARK_DIR.tgz"
-    fetch_untar_file "$SPARK_FILE" "$APACHE_MIRROR/spark/spark-$SPARK_VERSION/$SPARK_FILE"
+#    SPARK_FILE="$SPARK_DIR.tgz"
+#    fetch_untar_file "$SPARK_FILE" "$APACHE_MIRROR/spark/spark-$SPARK_VERSION/$SPARK_FILE"
 
   elif [ "START_ZK" = "$OPERATION" ];
   then
@@ -218,6 +223,7 @@ run() {
   then
     cd data
     start_if_needed leiningen.core.main "Load Generation" 1 $LEIN run -r -t $LOAD --configPath ../$CONF_FILE
+    # start_if_needed leiningen.core.main "Load Generation" 1 $LEIN run -n -r -t $LOAD --configPath ../$CONF_FILE  # first time only
     cd ..
   elif [ "STOP_LOAD" = "$OPERATION" ];
   then
